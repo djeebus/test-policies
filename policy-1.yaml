@@ -1,0 +1,19 @@
+policies:
+  - name: notify on server state change
+    resource: ec2
+    mode:
+      type: ec2-instance-state
+      events:
+        - pending
+        - running
+        - shutting-down
+        - stopped
+        - stopping
+        - terminated
+    actions:
+      - type: webhook
+        url: https://webhook.site/96043795-2e79-45ab-9f31-3cd6a9d1c581
+        query-params:
+          resource_name: resource.name
+          policy_name: policy.name
+        body: 'resources[].name'
